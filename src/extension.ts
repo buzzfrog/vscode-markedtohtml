@@ -1,12 +1,23 @@
 'use strict';
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-var encode = require('encode-html');
-var marked = require('marked');
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
+// https://www.npmjs.com/package/encode-html
+import encode = require('encode-html');
+// https://www.npmjs.com/package/marked
+import marked = require('marked');
+/*marked.setOptions({
+  renderer: new marked.Renderer(),
+  gfm: false,
+  tables: true,
+  breaks: true,
+  pedantic: false,
+  sanitize: true,
+  smartLists: true,
+  smartypants: false
+});
+*/
+
+
 export function activate(context: vscode.ExtensionContext) {
     let previewUri = vscode.Uri.parse('html-preview://html-preview');
     
@@ -17,10 +28,25 @@ export function activate(context: vscode.ExtensionContext) {
         }
         
         private displayHtml() {
-            var s = '<h1>kalle</h1>';
+            var renderer = new marked.Renderer();
+ 
+            renderer.heading = function (text, level) {
+            
+                return '<h' + level + '>' + text + '</h' + level + '>';
+            };
 
-             
-            return encode(s);
+             let editor = vscode.window.activeTextEditor;
+            if (editor.document.languageId === 'markdown') {
+                let text = editor.document.getText();
+                let htmlText = encode(marked(text, {renderer:renderer}));
+                
+                return htmlText; 
+            }
+            else {
+                return null;
+            }
+            
+            
         }
     }
     

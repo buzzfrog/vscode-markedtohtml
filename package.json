@@ -1,8 +1,9 @@
 {
   "name": "vscode-markdowntohtml",
-  "displayName": "vscode-markdowntohtml",
-  "description": "",
-  "version": "0.0.1",
+  "displayName": "Markdown to HTML preview",
+  "description": "Convert the Markdown file to HTML",
+  "version": "0.2.1",
+  "icon": "./images/icon.png",
   "publisher": "buzzfrog",
   "engines": {
     "vscode": "^0.10.7"
@@ -18,7 +19,7 @@
     "commands": [
       {
         "command": "extension.previewHtml",
-        "title": "Preview Markdown"
+        "title": "Convert Markdown to HTML"
       }
     ]
   },
